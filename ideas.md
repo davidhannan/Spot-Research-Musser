@@ -1,1 +1,1 @@
-##Ideas to implement with Spot
+## Ideas to implement with Spot
