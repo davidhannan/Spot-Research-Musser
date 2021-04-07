@@ -7,3 +7,5 @@
 
 [GRPC Intro](https://grpc.io/docs/what-is-grpc/introduction/)
 
+[python env setup](https://dev.bostondynamics.com/docs/python/quickstart)
+
