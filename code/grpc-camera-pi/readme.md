@@ -12,4 +12,4 @@ made a virtualenv for opencv and other dependcies
 
 TODO:
 
-use grpc with this program to do things
+use grpc with this program to do things with computer vision
