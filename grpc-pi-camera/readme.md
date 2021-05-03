@@ -1,3 +1,5 @@
+#This project directory is currently broken, program seg faults for unknown reason. see [this](https://github.com/davidhannan/Spot-Research-Musser/tree/main/code/grpc-camera-pi) directory for the working version. 
+
 Raspberry Pi 4 8gb
 Ubuntu server
 
