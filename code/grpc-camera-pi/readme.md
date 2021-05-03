@@ -1,4 +1,5 @@
 Raspberry Pi 4 8gb, Pi Camera
+
 Ubuntu server
 
 made a virtualenv for opencv and other dependcies
