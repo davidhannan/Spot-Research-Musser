@@ -1,5 +1,24 @@
 from flask import Flask, Response
 import cv2
+
+from concurrent import futures
+import logging
+import message
+import grpc
+
+import message_pb2
+import message_pb2_grpc
+
+class MessageServicer(message_pb2_grpc.MessengerServicer):
+
+    def getMsg(self, request, context):
+        response = message_pb2.msg()
+        response.message = message.getMsg(request.message)
+        print(response.message)
+        return response
+
+    
+
 app = Flask(__name__)
 video = cv2.VideoCapture(-1)
 @app.route('/')
@@ -19,3 +38,8 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=2204, threaded=True)
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    helloworld_pb2_grpc.add_MessengerServicer_to_server(Messenger(), server)
+    server.add_insecure_port('[0.0.0.0]:50051')
+    server.start()
+    server.wait_for_termination()
