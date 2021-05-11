@@ -32,30 +32,44 @@ channel = grpc.insecure_channel('192.168.1.171:50051')
 
 stub = message_pb2_grpc.MessengerStub(channel)
 
-inp = input()
+#inp = input()
 
-message = message_pb2.msg(message=inp)
 
-response = stub.getMsg(message)
 
-print(response.message)
+
+
+
 
 app = Flask(__name__)
-video = cv2.VideoCapture(0)
+imcap = cv2.VideoCapture(0)
+imcap.set(3, 640) # set width as 640
+imcap.set(4, 480) # set height as 480
+
+faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 @app.route('/')
 def index():
     return inp
 def gen(video):
     while True:
-        success, image = video.read()
-        ret, jpeg = cv2.imencode('.jpg', image)
+        success, img = imcap.read()
+        imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = faceCascade.detectMultiScale(imgGray, 1.3, 5) 
+        for (x, y, w, h) in faces:
+            img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255,   0), 3)
+            coords = str(x) + ", " + str(y) + ", " + str(w) + ", " + str(h)
+            
+            message = message_pb2.msg(message=coords)
+            response = stub.getMsg(message)
+            print(response.message)
+        #cv2.imshow('face_detect', img)
+        ret, jpeg = cv2.imencode('.jpg', img)
         frame = jpeg.tobytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 @app.route('/video_feed')
 def video_feed():
     global video
-    return Response(gen(video),
+    return Response(gen(imcap),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=2204, threaded=True)
