@@ -1,7 +1,7 @@
 code directory
 
 currently the "grpc-camera-pi" directory contains a program which detects faces in the raspberry pi camera feed and displays the output in a webpage. It then sends the x, y, h, w values of where the face is in the frame over grpc to a receiver program in "grpc receiver"
-
+<img src="https://github.com/davidhannan/Spot-Research-Musser/blob/main/code/working.JPG" width="400">
 
 "grpc-receiver" directory contains a program that connects to a program that can send grpc and it will receive the messages that are sent. I have been using this to connect to the camera web app and test grpc functions.
 
