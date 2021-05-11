@@ -14,6 +14,8 @@ made a virtualenv for opencv and other dependcies
 
 The camserver.py program runs in conjunction with the receiver.py program found in the "grpc receiver" directory. camserver.py runs a flask webserver which displays the feed from the raspberry pi camera. This feed is processed with opencv which detects faces. The x, y, w, h values are then sent to the receiver.py program via grpc. These values could then be used by a program to do something else. This program is more of an exercise in the use of grpc and computer vision.
 
+<img src="https://github.com/davidhannan/Spot-Research-Musser/blob/main/code/working.JPG" width="400">
+
 TODO:
 
 do something with the coordinate values
